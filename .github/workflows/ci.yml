@@ -23,6 +23,11 @@ jobs:
           echo "$ARCADEOS_SECURE_BOOT_CERTIFICATE" > mkosi.crt
           echo "$ARCADEOS_SECURE_BOOT_KEY" > mkosi.key
           chmod 0600 mkosi.key
+      # https://github.com/systemd/mkosi/pull/3178
+      - name: Install missing dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --assume-yes --no-install-recommends createrepo-c
       - name: Bootstrap
         run:  ./scripts/bootstrap
       - name: Build
