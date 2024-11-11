@@ -7,4 +7,10 @@ git submodule update --init
 # Drop once https://github.com/systemd/mkosi/issues/3176 is resolved
 mkdir -p submodules/systemd/build/mkosi.builddir/fedora~41~x86-64
 
-./mkosi genkey
+if [ -e mkosi.crt ] && [ -e mkosi.key ]; then
+    echo 'Secure boot secrets found, skipping genkey'
+else
+    ./mkosi --genkey-common-name='ArcadeOS of %u' genkey
+fi
+
+exit 0
