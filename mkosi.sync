@@ -21,6 +21,6 @@ do
     fi
 done
 
-mkosi --directory=submodules/systemd --release=41 -t none
+mkosi --directory=submodules/systemd --distribution=fedora --release=41 -t none
 
 exit 0
