@@ -1,0 +1,10 @@
+#!/bin/sh
+# SPDX-License-Identifier: LGPL-2.1-or-later
+set -e
+
+git submodule update --init
+
+# Drop once https://github.com/systemd/mkosi/issues/3176 is resolved
+mkdir -p submodules/systemd/build/mkosi.builddir/fedora~41~x86-64
+
+./mkosi genkey

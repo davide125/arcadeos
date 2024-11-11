@@ -1,0 +1,20 @@
+#!/bin/sh
+# SPDX-License-Identifier: LGPL-2.1-or-later
+set -e
+
+fail() {
+    echo $* 1>&2
+    exit 1
+}
+
+if [ ! -r submodules/systemd/mkosi.conf ]; then
+    fail "systemd submodule not found, run scripts/bootstrap"
+fi
+
+if [ -r submodules/systemd/build/mkosi.builddir/fedora~41~x86-64/systemd-2*.rpm ]; then
+    echo "Found previously built systemd"
+else
+    mkosi --directory=submodules/systemd --release=41 -t none
+fi
+
+exit 0

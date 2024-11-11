@@ -1,0 +1,14 @@
+#!/bin/sh
+# SPDX-License-Identifier: LGPL-2.1-or-later
+set -e
+
+fail() {
+    echo $* 1>&2
+    exit 1
+}
+
+if [ ! -x submodules/mkosi/bin/mkosi ]; then
+    fail "mkosi submodule not found, run scripts/bootstrap"
+fi
+
+exec submodules/mkosi/bin/mkosi "$@"

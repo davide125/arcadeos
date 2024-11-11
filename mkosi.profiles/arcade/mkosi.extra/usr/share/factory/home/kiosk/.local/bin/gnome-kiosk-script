@@ -1,0 +1,14 @@
+#!/bin/sh
+# SPDX-License-Identifier: LGPL-2.1-or-later
+set -e
+
+echo "Starting attract-mode" | systemd-cat -t kiosk
+
+attract 2>&1 | systemd-cat -t kiosk
+
+echo "Sleeping before re-executing" | systemd-cat -t kiosk
+
+sleep 1.0
+
+echo "Re-executing $0" | systemd-cat -t kiosk
+exec "$0" "$0"

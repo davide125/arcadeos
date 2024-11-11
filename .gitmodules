@@ -1,0 +1,17 @@
+[submodule "particleos"]
+	path = submodules/particleos
+	url = https://github.com/systemd/particleos
+[submodule "particleos-wip/desktop"]
+	path = submodules/particleos-wip/desktop
+	url = https://github.com/davide125/particleos
+	branch = desktop
+[submodule "particleos-wip/kiosk"]
+	path = submodules/particleos-wip/kiosk
+	url = https://github.com/davide125/particleos
+	branch = kiosk
+[submodule "systemd"]
+	path = submodules/systemd
+	url = https://github.com/systemd/systemd
+[submodule "mkosi"]
+	path = submodules/mkosi
+	url = https://github.com/systemd/mkosi
