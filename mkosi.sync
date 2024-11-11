@@ -3,7 +3,7 @@
 set -e
 
 fail() {
-    echo $* 1>&2
+    echo "$@" 1>&2
     exit 1
 }
 
@@ -11,10 +11,16 @@ if [ ! -r submodules/systemd/mkosi.conf ]; then
     fail "systemd submodule not found, run scripts/bootstrap"
 fi
 
-if [ -r submodules/systemd/build/mkosi.builddir/fedora~41~x86-64/systemd-2*.rpm ]; then
-    echo "Found previously built systemd"
-else
-    mkosi --directory=submodules/systemd --release=41 -t none
-fi
+# This is a loop because of https://www.shellcheck.net/wiki/SC2144
+for f in \
+    submodules/systemd/build/mkosi.builddir/fedora~41~x86-64/systemd-2*.rpm
+do
+    if [ -r "$f" ]; then
+        echo "Found previously built systemd"
+	exit 0
+    fi
+done
+
+mkosi --directory=submodules/systemd --release=41 -t none
 
 exit 0
