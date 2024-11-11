@@ -1,0 +1,29 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  ci:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: systemd/mkosi@8976a0abb19221e65300222f2d33067970cca0f1
+      - name: Initialize secure boot secrets
+        if: github.repository == 'davide125/arcadeos'
+        env:
+          ARCADEOS_SECURE_BOOT_CERTIFICATE: ${{secrets.ARCADEOS_SECURE_BOOT_CERTIFICATE}}
+          ARCADEOS_SECURE_BOOT_KEY: ${{secrets.ARCADEOS_SECURE_BOOT_KEY}}
+        run: |
+          echo "$ARCADEOS_SECURE_BOOT_CERTIFICATE" > mkosi.crt
+          echo "$ARCADEOS_SECURE_BOOT_KEY" > mkosi.key
+          chmod 0600 mkosi.key
+      - name: Bootstrap
+        run:  ./scripts/bootstrap
+      - name: Build
+        run:  ./mkosi -f
