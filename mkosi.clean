@@ -3,4 +3,4 @@
 set -e
 set -o nounset
 
-rm -rf "$OUTPUTDIR"/ArcadeOS_*
+rm -rf "${OUTPUTDIR}"/"${IMAGE_ID}"_*
