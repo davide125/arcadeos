@@ -17,7 +17,7 @@ jobs:
       - name: Initialize secure boot secrets
         if: github.repository == 'davide125/arcadeos'
         env:
-          ARCADEOS_SECURE_BOOT_CERTIFICATE: ${{secrets.ARCADEOS_SECURE_BOOT_CERTIFICATE}}
+          ARCADEOS_SECURE_BOOT_CERTIFICATE: ${{vars.ARCADEOS_SECURE_BOOT_CERTIFICATE}}
           ARCADEOS_SECURE_BOOT_KEY: ${{secrets.ARCADEOS_SECURE_BOOT_KEY}}
         run: |
           echo "$ARCADEOS_SECURE_BOOT_CERTIFICATE" > mkosi.crt
