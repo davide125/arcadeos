@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: LGPL-2.1-or-later
 set -e
 
-# FIXME: this shouldn't need root
-sudo rm -r submodules/systemd/build*
+rm -rf submodules/systemd/build/mkosi.builddir/
+rm -rf submodules/systemd/build-host/
 
 # Drop once https://github.com/systemd/mkosi/issues/3176 is resolved
 mkdir -p submodules/systemd/build/mkosi.builddir/fedora~41~x86-64
