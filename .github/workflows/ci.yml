@@ -23,6 +23,13 @@ jobs:
           echo "$ARCADEOS_SECURE_BOOT_CERTIFICATE" > mkosi.crt
           echo "$ARCADEOS_SECURE_BOOT_KEY" > mkosi.key
           chmod 0600 mkosi.key
+      # Temporary hack until a backport is added to ppa:michel-slm/kernel-utils
+      # We need 1.8 or later for zstd compression support
+      - name: Install updated erofs-utils
+        run: |
+          curl --silent --show-error --fail --remote-name https://mirrors.edge.kernel.org/ubuntu/pool/universe/e/erofs-utils/erofs-utils_1.8.2-2_amd64.deb
+          sudo dpkg -i erofs-utils_1.8.2-2_amd64.deb
+          rm erofs-utils_1.8.2-2_amd64.deb
       - name: Bootstrap
         run:  ./scripts/bootstrap
       - name: Build
