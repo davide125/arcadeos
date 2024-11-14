@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
+# Do not block startup on the network
+disable systemd-networkd-wait-online.service
+
+# Enable iwd for Wi-Fi
+enable iwd.service
