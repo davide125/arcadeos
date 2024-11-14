@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-      - uses: systemd/mkosi@923b1093f26f5a17d0bb12b802ee5ae27c7b1c5f
+      - uses: systemd/mkosi@a15a97da5a102414bdd461e92e9faabf899692cc
       - name: Initialize secure boot secrets
         if: github.repository == 'davide125/arcadeos'
         env:
@@ -23,13 +23,6 @@ jobs:
           echo "$ARCADEOS_SECURE_BOOT_CERTIFICATE" > mkosi.crt
           echo "$ARCADEOS_SECURE_BOOT_KEY" > mkosi.key
           chmod 0600 mkosi.key
-      # Temporary hack until a backport is added to ppa:michel-slm/kernel-utils
-      # We need 1.8 or later for zstd compression support
-      - name: Install updated erofs-utils
-        run: |
-          curl --silent --show-error --fail --remote-name https://mirrors.edge.kernel.org/ubuntu/pool/universe/e/erofs-utils/erofs-utils_1.8.2-2_amd64.deb
-          sudo dpkg -i erofs-utils_1.8.2-2_amd64.deb
-          rm erofs-utils_1.8.2-2_amd64.deb
       - name: Bootstrap
         run:  ./scripts/bootstrap
       - name: Build
