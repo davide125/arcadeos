@@ -1,0 +1,15 @@
+#!/bin/sh
+# SPDX-License-Identifier: LGPL-2.1-or-later
+set -e
+
+cat > "${BUILDROOT}/usr/lib/os-release" <<EOF
+NAME="${IMAGE_ID}"
+VERSION="${IMAGE_VERSION}"
+ID=$(echo "$IMAGE_ID" | tr '[:upper:]' '[:lower:]')
+ID_LIKE=$DISTRIBUTION
+VERSION_ID=$IMAGE_VERSION
+PRETTY_NAME="${IMAGE_ID} ${IMAGE_VERSION}"
+DEFAULT_HOSTNAME="arcade"
+HOME_URL="https://arcadeos.org"
+BUG_REPORT_URL="https://github.com/davide125/arcadeos/issues"
+EOF
