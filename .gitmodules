@@ -11,3 +11,6 @@
 [submodule "mkosi"]
 	path = submodules/mkosi
 	url = https://github.com/systemd/mkosi
+[submodule "submodules/particleos-wip/splash"]
+	path = submodules/particleos-wip/splash
+	url = https://github.com/davide125/particleos
