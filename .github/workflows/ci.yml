@@ -27,5 +27,7 @@ jobs:
           chmod 0600 mkosi.key
       - name: Bootstrap
         run:  ./scripts/bootstrap
+      - name: Build systemd
+        run:  ./mkosi -t none
       - name: Build
-        run:  ./mkosi -f
+        run: ./mkosi -f
