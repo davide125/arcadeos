@@ -27,5 +27,9 @@ jobs:
           chmod 0600 mkosi.key
       - name: Bootstrap
         run:  ./scripts/bootstrap
+      # We have to build systemd first due to a regression introduced in
+      # https://github.com/systemd/mkosi/commit/14e70bf5edf196b3e9b02d1148f54b5f0350417f
+      - name: Build systemd
+        run:  ./mkosi -t none
       - name: Build
         run:  ./mkosi -f
