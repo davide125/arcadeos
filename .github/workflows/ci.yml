@@ -29,3 +29,9 @@ jobs:
         run:  ./scripts/bootstrap
       - name: Build
         run:  ./mkosi -f
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Image
+          path: mkosi.output/ArcadeOS-*.*
+          if-no-files-found: error
