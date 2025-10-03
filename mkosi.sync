@@ -13,7 +13,7 @@ if [ ! -x "$MKOSI" ]; then
     fail "mkosi submodule not found, run scripts/bootstrap"
 fi
 
-if [ ! -r submodules/systemd/mkosi.conf ]; then
+if [ ! -r submodules/systemd/mkosi/mkosi.conf ]; then
     fail "systemd submodule not found, run scripts/bootstrap"
 fi
 
@@ -27,13 +27,31 @@ do
     fi
 done
 
+# Build the systemd tools tree
+# Using --package-cache-dir because $HOME/.cache/mkosi is read-only
+$MKOSI \
+    --directory=submodules/systemd \
+    --tools-tree=default \
+    --package-cache-dir=../../mkosi.pkgcache \
+    --force \
+    box -- true
+
 # Build systemd for the host
-# Using --force because we need to build the tools tree as well
-# Hardcoding -Dtpm2=enabled because otherwise we don't get systemd-measure
-$MKOSI --directory=submodules/systemd --tools-tree=default --force sandbox meson setup -Dtpm2=enabled build-host
-$MKOSI --directory=submodules/systemd --tools-tree=default sandbox meson compile -C build-host
+$MKOSI \
+    --directory=submodules/systemd \
+    --tools-tree=default \
+    box -- meson setup build-host
+$MKOSI \
+    --directory=submodules/systemd \
+    --tools-tree=default \
+    box -- meson compile -C build-host
 
 # Build systemd for the target
-$MKOSI --directory=submodules/systemd --distribution="$DISTRIBUTION" --release="$RELEASE" -t none
+$MKOSI \
+    --directory=submodules/systemd \
+    --distribution="$DISTRIBUTION" \
+    --release="$RELEASE" \
+    --package-cache-dir=../../mkosi.pkgcache \
+    -t none
 
 exit 0
