@@ -14,8 +14,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup mkosi
-        uses: systemd/mkosi@c37a55f91bc4b5fe325123e971b10ab0d0e8a0f6
       - name: Initialize secure boot secrets
         if: github.repository == 'davide125/arcadeos'
         env:
@@ -27,10 +25,12 @@ jobs:
           chmod 0600 mkosi.key
       - name: Bootstrap
         run:  ./scripts/bootstrap
+      - name: Setup mkosi
+        uses: ./submodules/mkosi
       # https://github.com/systemd/mkosi/commit/57ebda7c5fa47a4dd3df829d776a10c23e8cdb4a
       - name: Build tools tree
         run: ./mkosi -f box -- true
       - name: Free disk space
-        uses: sudo rm -rf /usr/local/lib/android /usr/share/dotnet
+        run:  sudo rm -rf /usr/local/lib/android /usr/share/dotnet
       - name: Build
         run:  ./mkosi -f
