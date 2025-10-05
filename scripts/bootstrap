@@ -5,8 +5,8 @@ set -e
 git submodule update --init
 
 # Drop once https://github.com/systemd/mkosi/issues/3176 is resolved
-DISTRIBUTION=$(awk -F= '/Distribution=/ { print $2 }' mkosi.conf)
-RELEASE=$(awk -F= '/Release=/ { print $2 }' mkosi.conf)
+DISTRIBUTION=$(awk -F= '/^Distribution=/ { print $2 }' mkosi.conf)
+RELEASE=$(awk -F= '/^Release=/ { print $2 }' mkosi.conf)
 mkdir -p "submodules/systemd/build/mkosi.builddir/${DISTRIBUTION}~${RELEASE}~x86-64"
 mkdir -p submodules/systemd/build-host
 
