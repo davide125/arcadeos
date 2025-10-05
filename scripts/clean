@@ -6,7 +6,9 @@ rm -rf submodules/systemd/build/mkosi.builddir/
 rm -rf submodules/systemd/build-host/
 
 # Drop once https://github.com/systemd/mkosi/issues/3176 is resolved
-mkdir -p submodules/systemd/build/mkosi.builddir/fedora~41~x86-64
+DISTRIBUTION=$(awk -F= '/Distribution=/ { print $2 }' mkosi.conf)
+RELEASE=$(awk -F= '/Release=/ { print $2 }' mkosi.conf)
+mkdir -p "submodules/systemd/build/mkosi.builddir/${DISTRIBUTION}~${RELEASE}~x86-64"
 mkdir -p submodules/systemd/build-host
 
 ./mkosi clean
