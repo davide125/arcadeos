@@ -2,15 +2,28 @@
 # SPDX-License-Identifier: LGPL-2.1-or-later
 set -e
 
+./mkosi --directory=submodules/systemd clean
 rm -rf submodules/systemd/build/mkosi.builddir/
 rm -rf submodules/systemd/build-host/
+
+./mkosi clean
+
+if [ "$1" = '--purge' ]; then
+    sudo rm -rf \
+        mkosi.cache/ \
+	mkosi.pkgcache/ \
+	mkosi.output/ \
+        mkosi.tools/ \
+        mkosi.tools.manifest \
+	submodules/systemd/build \
+	submodules/systemd/mkosi.tools/ \
+	submodules/systend/mkosi.tooks.manifest
+fi
 
 # Drop once https://github.com/systemd/mkosi/issues/3176 is resolved
 DISTRIBUTION=$(awk -F= '/Distribution=/ { print $2 }' mkosi.conf)
 RELEASE=$(awk -F= '/Release=/ { print $2 }' mkosi.conf)
 mkdir -p "submodules/systemd/build/mkosi.builddir/${DISTRIBUTION}~${RELEASE}~x86-64"
 mkdir -p submodules/systemd/build-host
-
-./mkosi clean
 
 exit 0
